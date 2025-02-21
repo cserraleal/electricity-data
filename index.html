@@ -68,11 +68,13 @@
         var layout = {
             title: '',
             xaxis: { title: 'Año' },
-            yaxis: { title: 'Generación Ele. (GWh)' }
-            x: 0, //Mover legend a la izquierda
-            y: 1, //Mover legend arriba
-            xanchor: 'left',
-            yanchor: 'top'
+            yaxis: { title: 'Generación Ele. (GWh)' },
+            legend:{
+                x: 0, //Mover legend a la izquierda
+                y: 1, //Mover legend arriba
+                xanchor: 'left',
+                yanchor: 'top'
+            }
         };
 
         Plotly.newPlot('chart', data, layout);
