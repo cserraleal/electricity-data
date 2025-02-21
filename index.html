@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"> <!-- Changed language to Spanish -->
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,19 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         h2 { display: none; } /* Hides the heading */
+        .legend-container {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin-bottom: 10px; /* Space between legend and graph */
+        }
     </style>
 </head>
 <body>
-    <h2 style="text-align: center;">Generación de Electricidad por Fuente en Guatemala</h2>
+
+    <!-- Custom Legend Positioned Above the Graph -->
+    <div class="legend-container" id="custom-legend"></div>
+
     <div id="chart" style="width: 100%; height: 600px;"></div>
 
     <script>
@@ -69,15 +78,21 @@
             title: '',
             xaxis: { title: 'Año' },
             yaxis: { title: 'Generación Ele. (GWh)' },
-            legend:{
-                x: 0, //Mover legend a la izquierda
-                y: 1, //Mover legend arriba
-                xanchor: 'left',
-                yanchor: 'top'
-            }
+            showlegend: false // Hide Plotly's default legend
         };
 
-        Plotly.newPlot('chart', data, layout);
+        Plotly.newPlot('chart', data, layout).then(function(gd) {
+            var legendHTML = '';
+            data.forEach(function(trace, index) {
+                legendHTML += `<span style="margin-right: 15px; font-weight: bold; color: ${Plotly.d3.schemeCategory10[index]};">
+                                  <span style="display: inline-block; width: 12px; height: 12px; background-color: ${Plotly.d3.schemeCategory10[index]};"></span>
+                                  ${trace.name}
+                               </span>`;
+            });
+            document.getElementById('custom-legend').innerHTML = legendHTML;
+        });
     </script>
+
 </body>
 </html>
+
